@@ -60,6 +60,10 @@
                     v-card-title.display-2
                         | How to keep the
                         b #FleetOnFleek
+                    ul
+                        li Retain customer loyalty by maintaining excellent staff and service standards
+                        li Utilize JetBlue's recognized customer satisfaction efforts to better accomodate those with disabilities
+                        li Improve communication regarding unavoidable delays or cancellations to customers using direct notifications whenever possible
                     v-card-text "Tough choices, but I did all simultaneously as a business traveler. Best experience in a long time! #wishmyflightwaslonger #what"
 </template>
 
