@@ -2,7 +2,7 @@ import json
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from textblob import TextBlob
 
-def sentiment_scores(source, sentence):
+def sentiment_scores(sentence):
     # Create a SentimentIntensityAnalyzer object.
     sid_obj = SentimentIntensityAnalyzer()
     
@@ -17,16 +17,26 @@ def sentiment_scores(source, sentence):
     #Overall sentiment dictionary is : "+ sentiment_dict +\
     #output = f'Sentence: {sentence}\nNegative: {d["neg"] * 100}% | Neutral: {d["neu"] * 100}% | Positive: {d["pos"] * 100}%'
     #output = f'Sentence: {sentence}\nPolartiy: {polarity}% | Subjectivity: {subjectivity}%'
-    output = {"Source" : source, "Sentence " : sentence, "Sentiment": polarity , "Subjectivity": subjectivity}
-    return output
+    return (polarity, subjectivity)
 
-with open('reddit.txt') as f:
-    lines = f.readlines()
-    output1 = [sentiment_scores("Reddit", x) for x in lines]
-with open('tweets.txt') as f:
-    lines = f.readlines()
-    output2 = [sentiment_scores("Twitter", x) for x in lines]
-with open('complete_output.txt', 'w') as f:
-    output = {key: value for (key, value) in (output1.items() + output2.items())}
-    json1 = json.dumps(output)
-    f.write('\n'.join(json1))
+with open('input.json') as f:
+    data = json.load(f)
+    output = {}
+    count = 0
+    total = sum(len(x) for x in data.values())
+    for source, sentences in data.items():
+        results = []
+        for sentence in sentences:
+            polarity, subjectivity = sentiment_scores(sentence)
+            result = {
+                'sentence': sentence,
+                'polarity': polarity,
+                'subjectivity': subjectivity
+            }
+            results.append(result)
+            count += 1
+            if count % 500 == 0:
+                print(f'{count / total * 100:.2f}%')
+        output[source] = results
+with open('output.json', 'w') as f:
+    json.dump(output, f)

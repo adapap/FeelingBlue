@@ -25,6 +25,8 @@ Tools:
 Links:
 https://finance.yahoo.com/quote/JBLU/community/
 
+https://monkeylearn.com/sentiment-analysis/
+
 # Customer Reviews
 
 https://www.consumeraffairs.com/travel/jetblue.html?#sort=top_reviews&filter=none +
